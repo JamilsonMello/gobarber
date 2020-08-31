@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import ForgetPasswordController from '@modules/users/infra/controllers/ForgetPasswordController';
-import ResetPasswordController from '@modules/users/infra/controllers/ResetPasswordController';
+import ForgetPasswordController from '@modules/users/infra/http/controllers/ForgetPasswordController';
+import ResetPasswordController from '@modules/users/infra/http/controllers/ResetPasswordController';
 import * as validations from '../validations/password.routes';
 
 const routes = Router();
