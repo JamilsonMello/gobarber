@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 
 import uploadConfig from '@config/upload';
-import UserController from '@modules/users/infra/controllers/UserController';
+import UserController from '@modules/users/infra/http/controllers/UserController';
 import UpdateUserAvatarController from '@modules/users/infra/controllers/UpdateUserAvatarController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import * as validations from '../validations/user.routes';
