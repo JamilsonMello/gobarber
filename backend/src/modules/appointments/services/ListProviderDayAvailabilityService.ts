@@ -28,7 +28,7 @@ export default class ListProviderMonthAvailabilityService {
     year,
     day,
   }: IRequest): Promise<IResponse> {
-    const appointments = await this.appointmentRepository.findAllAppointmentsInDay(
+    const appointments = await this.appointmentRepository.findAllInDayFromProvider(
       {
         provider_id,
         month,

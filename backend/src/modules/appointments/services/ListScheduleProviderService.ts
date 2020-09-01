@@ -23,7 +23,7 @@ export default class ListScheduleProviderService {
     year,
     day,
   }: IRequest): Promise<Appointment[]> {
-    const appointments = await this.appointmentRepository.findAllAppointmentsInDay(
+    const appointments = await this.appointmentRepository.findAllInDayFromProvider(
       {
         provider_id,
         month,
