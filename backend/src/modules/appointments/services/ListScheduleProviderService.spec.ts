@@ -1,5 +1,6 @@
-import FakeAppointmentRepository from '@modules/appointments/repositories/fakes/FakeAppointmentRepository';
+import FakeAppointmentRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
 import ListScheduleProviderService from './ListScheduleProviderService';
+import { getDate } from 'date-fns';
 
 let fakeAppointmentRepository: FakeAppointmentRepository;
 let listScheduleProviderService: ListScheduleProviderService;
@@ -36,9 +37,9 @@ describe('ListScheduleProvider', () => {
 
     const availability = await listScheduleProviderService.execute({
       provider_id: 'id-1',
-      month: new Date().getMonth() + 1,
-      year: new Date().getFullYear(),
-      day: new Date().getDate() + 1,
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+      day: date.getDate(),
     });
 
     expect(availability).toEqual([appointment, appointment2, appointment3]);

@@ -1,4 +1,4 @@
-import FakeAppointmentRepository from '@modules/appointments/repositories/fakes/FakeAppointmentRepository';
+import FakeAppointmentRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
 import ListProviderMonthAvailabilityService from './ListProviderMonthAvailabilityService';
 
 let fakeAppointmentRepository: FakeAppointmentRepository;
@@ -14,26 +14,42 @@ describe('ListProviderMonthAvailability', () => {
 
   it('Should be able to list the month availability from provider ', async () => {
     const date = new Date(Date.now());
-    date.setDate(date.getDate() + 1);
+    date.setHours(8);
+    date.setMonth(date.getMonth() < 11 ? date.getMonth() + 2 : 0);
+    date.getMonth() === 0 ? date.setFullYear(date.getFullYear() + 1) : null;
+    date.setDate(10);
+    console.log(date)
+
+    await fakeAppointmentRepository.create({
+      provider_id: 'id-1',
+      date: new Date(date.setDate(date.getDate())),
+      user_id: 'user',
+    });
+
+    await fakeAppointmentRepository.create({
+      provider_id: 'id-1',
+      date: new Date(date.setDate(date.getDate() + 1)),
+      user_id: 'user',
+    });
+
+    await fakeAppointmentRepository.create({
+      provider_id: 'id-1',
+      date: new Date(date.setDate(date.getDate() + 1)),
+      user_id: 'user',
+    });
+
+    date.setDate(15);
     date.setHours(8);
 
-    await fakeAppointmentRepository.create({
+    Array.from({ length: 10 }, async (_, index) => {
+      await fakeAppointmentRepository.create({
       provider_id: 'id-1',
-      date: new Date(date),
+      date: new Date(date.setHours(date.getHours() + 1)),
       user_id: 'user',
     });
+    })
 
-    await fakeAppointmentRepository.create({
-      provider_id: 'id-1',
-      date: new Date(date.setHours(9)),
-      user_id: 'user',
-    });
-
-    await fakeAppointmentRepository.create({
-      provider_id: 'id-1',
-      date: new Date(date.setDate(date.getDate() - 2)),
-      user_id: 'user',
-    });
+    
 
     const availability = await listProviderMonthAvailabilityService.execute({
       provider_id: 'id-1',
@@ -43,9 +59,10 @@ describe('ListProviderMonthAvailability', () => {
 
     expect(availability).toEqual(
       expect.arrayContaining([
-        { day: date.getDate() + 2, available: true },
-        { day: date.getDate() + 3, available: true },
-        { day: date.getDate() - 3, available: false },
+        { day: 10, available: true },
+        { day: 11, available: true },
+        { day: 12, available: true },
+        { day: 15, available: false },
       ]),
     );
   });
