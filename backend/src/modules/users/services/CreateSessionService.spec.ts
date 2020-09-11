@@ -1,5 +1,6 @@
 import FakeUserRepository from '@modules/users/repositories/fakes/FakeUserRepository';
 import FakeBcryptHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import CreateSessionService from '@modules/users/services/CreateSessionService';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import AppError from '@shared/errors/AppError';
@@ -8,10 +9,12 @@ describe('CreateSession', () => {
   it('should be able create session to user', async () => {
     const fakeBcryptHashProvider = new FakeBcryptHashProvider();
     const fakeUserRepository = new FakeUserRepository();
+    const fakeCacheProvider = new FakeCacheProvider();
 
     const createUserService = new CreateUserService(
       fakeUserRepository,
       fakeBcryptHashProvider,
+      fakeCacheProvider,
     );
 
     await createUserService.execute({
@@ -54,6 +57,8 @@ describe('CreateSession', () => {
   it('should not be able to authenticate with wrong password', async () => {
     const fakeBcryptHashProvider = new FakeBcryptHashProvider();
     const fakeUserRepository = new FakeUserRepository();
+    const fakeCacheProvider = new FakeCacheProvider();
+
 
     const createSessionService = new CreateSessionService(
       fakeUserRepository,
@@ -63,6 +68,7 @@ describe('CreateSession', () => {
     const createUserService = new CreateUserService(
       fakeUserRepository,
       fakeBcryptHashProvider,
+      fakeCacheProvider,
     );
 
     await createUserService.execute({

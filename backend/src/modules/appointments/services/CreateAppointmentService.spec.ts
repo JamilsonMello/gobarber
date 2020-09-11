@@ -3,11 +3,13 @@ import FakeAppointmentRepository from '@modules/appointments/repositories/fakes/
 import FakeUserRepository from '@modules/users/repositories/fakes/FakeUserRepository';
 import FakeNotificationRepository from '@modules/notifications/repositories/fakes/FakeNotificationRepository';
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 
 let fakeAppointmentRepository: FakeAppointmentRepository;
 let fakeUserRepository: FakeUserRepository;
 let fakeNotificationRepository: FakeNotificationRepository;
 let createAppointmentService: CreateAppointmentService;
+let fakeCacheProvider: FakeCacheProvider;
 let date: Date;
 
 describe('CreateAppointment', () => {
@@ -18,10 +20,12 @@ describe('CreateAppointment', () => {
     fakeAppointmentRepository = new FakeAppointmentRepository();
     fakeUserRepository = new FakeUserRepository();
     fakeNotificationRepository = new FakeNotificationRepository();
+    fakeCacheProvider = new FakeCacheProvider();
     createAppointmentService = new CreateAppointmentService(
       fakeAppointmentRepository,
       fakeUserRepository,
       fakeNotificationRepository,
+      fakeCacheProvider,
     );
   });
 
