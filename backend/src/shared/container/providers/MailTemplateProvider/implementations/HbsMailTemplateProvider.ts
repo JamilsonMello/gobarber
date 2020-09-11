@@ -5,10 +5,10 @@ import IParseMailTemplateDTO from '../dtos/IParseMailTemplateDTO';
 
 class HbsMailTemplateProvider implements IMailTemplateProvider {
   public async parse({
-    file,
+    template,
     variables,
   }: IParseMailTemplateDTO): Promise<string> {
-    const templateFileContent = await fs.promises.readFile(file, {
+    const templateFileContent = await fs.promises.readFile(template, {
       encoding: 'utf-8',
     });
     const parseTemplate = handlebars.compile(templateFileContent);
