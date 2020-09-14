@@ -10,12 +10,15 @@ import '@shared/container';
 import '@shared/infra/http/database';
 
 import routes from '@shared/infra/http/routes/index';
+import rateLimiter from '@shared/infra/http/middleware/RateLimit';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 
 const app = express();
 
 app.use(cors());
+
+app.use(rateLimiter);
 
 app.use(express.json());
 
